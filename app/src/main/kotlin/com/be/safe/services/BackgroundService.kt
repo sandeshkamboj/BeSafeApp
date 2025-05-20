@@ -80,7 +80,7 @@ class BackgroundService : Service() {
     private fun setupRealtimeSubscription() {
         CoroutineScope(Dispatchers.IO).launch {
             val user = SupabaseClient.client.auth.currentUserOrNull() ?: return@launch
-            val channel = SupabaseClient.client.realtime.channel("commands-channel") {}
+            val channel = SupabaseClient.client.realtime.channel("commands-channel")
             val changeFlow = channel.postgresChangeFlow<PostgresAction.Insert>("public") {
                 table = "commands"
                 filter("user_id", FilterOperator.EQ, user.id)
